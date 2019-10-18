@@ -1,18 +1,21 @@
 package drylo.tech.esoscrap.utils;
 
-import drylo.tech.esoscrap.model.PowerGeneration;
-import org.influxdb.dto.Point;
+import drylo.tech.esoscrap.model.PowerData;
+import drylo.tech.esoscrap.repo.PowerDataRepo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Component
 public class Crawler {
+
+    @Autowired
+    PowerDataRepo repo;
 
     public static String[] POWER_SOURCE_LABELS = new String[] {
             "АЕЦ",
@@ -28,15 +31,12 @@ public class Crawler {
 
     @Scheduled(fixedRate = 1000 * 30, initialDelay = 0)
     public void crawlEsoWebsite() {
-        PowerGeneration powerGeneration = crawlPowerGeneration();
+        PowerData powerData = crawlPowerGeneration();
 
-        if(powerGeneration != null) {
-            Point point = InfluxUtils.powerGenerationToPoint(powerGeneration);
-            InfluxUtils.savePoint(point);
-        }
+        repo.save(powerData);
     }
 
-    public static PowerGeneration crawlPowerGeneration() {
+    public static PowerData crawlPowerGeneration() {
         try {
             Document page = Jsoup.connect("http://eso.bg/?did=32").get();
 
@@ -44,13 +44,16 @@ public class Crawler {
 
             int i = 0;
             Integer[] data = new Integer[9];
-
+            int sum = 0;
             for (String source : POWER_SOURCE_LABELS) {
                 String mw = dataTable.select("td:containsOwn(" + source + ")").next().first().text();
-                data[i++] = Integer.parseInt(mw);
-            }
+                sum += data[i++] = Integer.parseInt(mw);
 
-            return new PowerGeneration(Instant.now(), data);
+            }
+            String consumption = "Товар на РБ";
+            int consumation = Integer.parseInt(dataTable.select("th:containsOwn(" + consumption + ")").next().first().text());
+            int export = sum - consumation;
+            return new PowerData(LocalDateTime.now(), export, data);
         } catch (Exception e) {
             System.err.println("Exception while parsing ESO website :"+ e.getMessage());
             return null;

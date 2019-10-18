@@ -2,8 +2,6 @@ package drylo.tech.esoscrap;
 
 import drylo.tech.esoscrap.utils.Crawler;
 import drylo.tech.esoscrap.model.PowerGeneration;
-import drylo.tech.esoscrap.utils.InfluxUtils;
-import org.influxdb.dto.Point;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -56,9 +54,4 @@ public class EsoScrapJsoupTest {
         PowerGeneration powerGeneration = new PowerGeneration(Instant.now(), data);
     }
 
-    @Test
-    public void testCrawler() throws IOException {
-        PowerGeneration powerGeneration = Crawler.crawlPowerGeneration();
-        Point point = InfluxUtils.powerGenerationToPoint(powerGeneration);
-    }
 }
