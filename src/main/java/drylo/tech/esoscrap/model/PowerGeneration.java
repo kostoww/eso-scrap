@@ -1,18 +1,22 @@
 package drylo.tech.esoscrap.model;
 
-import org.influxdb.annotation.Column;
-import org.influxdb.annotation.Measurement;
-import org.influxdb.dto.Point;
 
-import java.time.Instant;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
-@Measurement(name = "powerGeneration")
+@Entity
 public class PowerGeneration {
 
+    @Id
+    @GeneratedValue
+    private long id;
+
     @Column(name = "time")
-    private Instant time;
+    private LocalDateTime time;
 
     @Column(name = "npp")
     private Integer nuclearPowerPlant;
@@ -29,22 +33,22 @@ public class PowerGeneration {
     @Column(name = "wpp")
     private Integer waterPowerPlant;
 
-    @Column(name = "small-wpp")
+    @Column(name = "small_wpp")
     private Integer smallWaterPowerPlant;
 
-    @Column(name = "wind-pp")
+    @Column(name = "wind_pp")
     private Integer windPowerPlant;
 
-    @Column(name = "photo-pp")
+    @Column(name = "photo_pp")
     private Integer photovoltaicPowerPlant;
 
-    @Column(name = "bio-pp")
+    @Column(name = "bio_pp")
     private Integer bioPowerPlant;
 
     public PowerGeneration() {
     }
 
-    public PowerGeneration(Instant time, Integer... data) {
+    public PowerGeneration(LocalDateTime time, Integer... data) {
         this.time = time;
         this.nuclearPowerPlant = data[0];
         this.thermalPowerPlant = data[1];
@@ -96,11 +100,11 @@ public class PowerGeneration {
                 '}';
     }
 
-    public Instant getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Instant time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

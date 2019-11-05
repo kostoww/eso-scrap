@@ -1,9 +1,7 @@
 package drylo.tech.esoscrap;
 
-import drylo.tech.esoscrap.utils.Crawler;
 import drylo.tech.esoscrap.model.PowerGeneration;
-import drylo.tech.esoscrap.utils.InfluxUtils;
-import org.influxdb.dto.Point;
+import drylo.tech.esoscrap.utils.Crawler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class EsoScrapJsoupTest {
 
@@ -53,12 +52,11 @@ public class EsoScrapJsoupTest {
             Assert.assertEquals(percent, part, 2d);
         }
 
-        PowerGeneration powerGeneration = new PowerGeneration(Instant.now(), data);
+        PowerGeneration powerGeneration = new PowerGeneration(LocalDateTime.now(), data);
     }
 
     @Test
     public void testCrawler() throws IOException {
-        PowerGeneration powerGeneration = Crawler.crawlPowerGeneration();
-        Point point = InfluxUtils.powerGenerationToPoint(powerGeneration);
+        Crawler.crawlPowerGeneration();
     }
 }

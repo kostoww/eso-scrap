@@ -1,18 +1,21 @@
 package drylo.tech.esoscrap.utils;
 
 import drylo.tech.esoscrap.model.PowerGeneration;
-import org.influxdb.dto.Point;
+import drylo.tech.esoscrap.repo.PowerDataRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Component
 public class Crawler {
+
+    @Autowired
+    PowerDataRepository powerDataRepo;
 
     public static String[] POWER_SOURCE_LABELS = new String[] {
             "АЕЦ",
@@ -31,8 +34,7 @@ public class Crawler {
         PowerGeneration powerGeneration = crawlPowerGeneration();
 
         if(powerGeneration != null) {
-            Point point = InfluxUtils.powerGenerationToPoint(powerGeneration);
-            InfluxUtils.savePoint(point);
+            powerDataRepo.save(powerGeneration);
         }
     }
 
@@ -50,7 +52,7 @@ public class Crawler {
                 data[i++] = Integer.parseInt(mw);
             }
 
-            return new PowerGeneration(Instant.now(), data);
+            return new PowerGeneration(LocalDateTime.now(), data);
         } catch (Exception e) {
             System.err.println("Exception while parsing ESO website :"+ e.getMessage());
             return null;
