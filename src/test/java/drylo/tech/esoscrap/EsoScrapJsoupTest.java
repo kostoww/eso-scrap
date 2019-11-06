@@ -31,7 +31,7 @@ public class EsoScrapJsoupTest {
 
         int i = 0;
         int sum = 0;
-        Integer[] data = new Integer[9];
+        Integer[] data = new Integer[10];
 
         for(String source : Crawler.POWER_SOURCE_LABELS) {
             Element mwElement = dataTable.select("td:containsOwn(" + source + ")").next().first();
