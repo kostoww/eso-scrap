@@ -45,6 +45,9 @@ public class PowerGeneration {
     @Column(name = "bio_pp")
     private Integer bioPowerPlant;
 
+    @Column(name = "export")
+    private Integer export;
+
     public PowerGeneration() {
     }
 
@@ -59,6 +62,7 @@ public class PowerGeneration {
         this.windPowerPlant = data[6];
         this.photovoltaicPowerPlant = data[7];
         this.bioPowerPlant = data[8];
+        this.export = data[9];
     }
 
     @Override
@@ -75,12 +79,13 @@ public class PowerGeneration {
                 Objects.equals(smallWaterPowerPlant, that.smallWaterPowerPlant) &&
                 Objects.equals(windPowerPlant, that.windPowerPlant) &&
                 Objects.equals(photovoltaicPowerPlant, that.photovoltaicPowerPlant) &&
-                Objects.equals(bioPowerPlant, that.bioPowerPlant);
+                Objects.equals(bioPowerPlant, that.bioPowerPlant) &&
+                Objects.equals(export, that.export);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(time, nuclearPowerPlant, thermalPowerPlant, districtHeatingPlant, fabricPowerPlant, waterPowerPlant, smallWaterPowerPlant, windPowerPlant, photovoltaicPowerPlant, bioPowerPlant);
+        return Objects.hash(time, nuclearPowerPlant, thermalPowerPlant, districtHeatingPlant, fabricPowerPlant, waterPowerPlant, smallWaterPowerPlant, windPowerPlant, photovoltaicPowerPlant, bioPowerPlant, export);
     }
 
     @Override
@@ -97,6 +102,7 @@ public class PowerGeneration {
                 ", windPowerPlant=" + windPowerPlant + NL +
                 ", photovoltaicPowerPlant=" + photovoltaicPowerPlant + NL +
                 ", bioPowerPlant=" + bioPowerPlant + NL +
+                ", export=" + export + NL +
                 '}';
     }
 
@@ -178,5 +184,13 @@ public class PowerGeneration {
 
     public void setBioPowerPlant(Integer bioPowerPlant) {
         this.bioPowerPlant = bioPowerPlant;
+    }
+
+    public Integer getExport() {
+        return export;
+    }
+
+    public void setExport(Integer export) {
+        this.export = export;
     }
 }

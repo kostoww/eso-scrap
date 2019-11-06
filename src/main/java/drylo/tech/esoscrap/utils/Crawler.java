@@ -45,12 +45,16 @@ public class Crawler {
             Elements dataTable = page.getElementsByClass("defaultTable2");
 
             int i = 0;
-            Integer[] data = new Integer[9];
-
+            Integer[] data = new Integer[10];
+            int sum = 0;
             for (String source : POWER_SOURCE_LABELS) {
                 String mw = dataTable.select("td:containsOwn(" + source + ")").next().first().text();
-                data[i++] = Integer.parseInt(mw);
+                sum += data[i++] = Integer.parseInt(mw);
             }
+
+            String consumption = "Товар на РБ";
+            int export = Integer.parseInt(dataTable.select("th:containsOwn(" + consumption + ")").next().first().text());
+            data[i] = sum - export;
 
             return new PowerGeneration(LocalDateTime.now(), data);
         } catch (Exception e) {
