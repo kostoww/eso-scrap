@@ -1,7 +1,7 @@
 package drylo.tech.esoscrap;
 
 import drylo.tech.esoscrap.model.PowerGeneration;
-import drylo.tech.esoscrap.utils.Crawler;
+import drylo.tech.esoscrap.utils.PowerGenerationCrawler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class EsoScrapJsoupTest {
@@ -33,7 +32,7 @@ public class EsoScrapJsoupTest {
         int sum = 0;
         Integer[] data = new Integer[10];
 
-        for(String source : Crawler.POWER_SOURCE_LABELS) {
+        for(String source : PowerGenerationCrawler.POWER_SOURCE_LABELS) {
             Element mwElement = dataTable.select("td:containsOwn(" + source + ")").next().first();
             String mw = mwElement.text();
             int currentPower = Integer.parseInt(mw);
@@ -56,7 +55,7 @@ public class EsoScrapJsoupTest {
     }
 
     @Test
-    public void testCrawler() throws IOException {
-        Crawler.crawlPowerGeneration();
+    public void testCrawler() {
+        PowerGenerationCrawler.crawlPowerGeneration();
     }
 }

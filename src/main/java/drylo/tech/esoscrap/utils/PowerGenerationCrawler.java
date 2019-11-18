@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class Crawler {
+public class PowerGenerationCrawler {
 
     @Autowired
     PowerDataRepository powerDataRepo;
