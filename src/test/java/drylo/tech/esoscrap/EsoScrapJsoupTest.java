@@ -1,7 +1,7 @@
 package drylo.tech.esoscrap;
 
 import drylo.tech.esoscrap.model.PowerGeneration;
-import drylo.tech.esoscrap.utils.PowerGenerationCrawler;
+import drylo.tech.esoscrap.crawler.PowerGenerationCrawler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

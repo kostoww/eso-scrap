@@ -1,4 +1,4 @@
-package drylo.tech.esoscrap;
+package drylo.tech.esoscrap.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,13 @@ public enum Tpp2Identifier {
     UNIT_5_POWER(623),
     UNIT_6_POWER(624),
     UNIT_7_POWER(625),
-    UNIT_8_POWER(626);
+    UNIT_8_POWER(626),
+
+    DESULPH_12(627),
+    DESULPH_34(628),
+    DESULPH_56(695),
+    DESULPH_7(629),
+    DESULPH_8(630);
 
     private int id;
     private static Map map = new HashMap<>();

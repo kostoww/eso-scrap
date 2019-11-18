@@ -1,4 +1,4 @@
-package drylo.tech.esoscrap.utils;
+package drylo.tech.esoscrap.crawler;
 
 import drylo.tech.esoscrap.model.PowerGeneration;
 import drylo.tech.esoscrap.repo.PowerDataRepository;

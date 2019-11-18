@@ -1,7 +1,7 @@
 package drylo.tech.esoscrap;
 
 import drylo.tech.esoscrap.model.NuclearGeneration;
-import drylo.tech.esoscrap.utils.NuclearGenerationCrawler;
+import drylo.tech.esoscrap.crawler.NuclearGenerationCrawler;
 import org.junit.Assert;
 import org.junit.Test;
 

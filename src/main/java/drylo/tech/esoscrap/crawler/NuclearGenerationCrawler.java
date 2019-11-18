@@ -1,7 +1,6 @@
-package drylo.tech.esoscrap.utils;
+package drylo.tech.esoscrap.crawler;
 
 import drylo.tech.esoscrap.model.NuclearGeneration;
-import drylo.tech.esoscrap.model.PowerGeneration;
 import drylo.tech.esoscrap.repo.NuclearDataRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,17 +15,17 @@ public class NuclearGenerationCrawler {
     @Autowired
     NuclearDataRepository nuclearRepo;
 
-    @Scheduled(fixedRate = 1000 * 30, initialDelay = 0)
+    @Scheduled(fixedRate = 1000 * 30, initialDelay = 20)
     public void crawlEsoWebsite() {
         NuclearGeneration nuclearGeneration = getNuclearPowerValues();
-
-        nuclearRepo.save(nuclearGeneration);
-
+        if(nuclearGeneration != null) {
+            nuclearRepo.save(nuclearGeneration);
+        }
     }
 
     public static NuclearGeneration getNuclearPowerValues() {
-        NuclearGeneration nuclearGeneration = new NuclearGeneration();
         try {
+            NuclearGeneration nuclearGeneration = new NuclearGeneration();
             Document document = Jsoup.connect("http://www.npp.bg:8081/InternetParameters.aspx").get();
 
             Element blockFiveElement = document.getElementById("txt_bl5_powervalue");
@@ -36,9 +35,10 @@ public class NuclearGenerationCrawler {
             Element blockSixElement = document.getElementById("txt_bl6_powevalue");
             int blockSix = Integer.parseInt(blockSixElement.attr("value").replace(" MW", ""));
             nuclearGeneration.setSix(blockSix);
+            return nuclearGeneration;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return nuclearGeneration;
     }
 }
