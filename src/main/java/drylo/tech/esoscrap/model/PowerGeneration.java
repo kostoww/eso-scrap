@@ -15,7 +15,7 @@ public class PowerGeneration {
     @GeneratedValue
     private long id;
 
-    @Column(name = "data_time")
+    @Column(name = "time")
     private LocalDateTime time;
 
     @Column(name = "npp")

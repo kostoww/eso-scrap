@@ -14,7 +14,7 @@ public class NuclearGeneration {
     @GeneratedValue
     private long id;
 
-    @Column(name = "data_time")
+    @Column(name = "time")
     private LocalDateTime time;
 
     @Column(name = "five")

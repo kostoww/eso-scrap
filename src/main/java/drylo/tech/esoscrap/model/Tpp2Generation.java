@@ -14,7 +14,7 @@ public class Tpp2Generation {
     @GeneratedValue
     private long id;
 
-    @Column(name = "data_time")
+    @Column(name = "time")
     private LocalDateTime time;
 
     private int unitOne;
